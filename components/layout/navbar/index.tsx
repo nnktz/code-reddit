@@ -8,11 +8,15 @@ import { Messages } from './messages'
 import { Notifications } from './notifications'
 import { Cart } from './cart'
 import { UserButton } from './user-button'
+import { MobileSidebar } from '../sidebar/mobile-sidebar'
 
 export const Navbar = () => {
   return (
     <nav className="fixed top-0 z-[49] flex h-20 w-full items-center justify-between border-b px-[10px] shadow-sm md:px-[30px]">
-      <Logo />
+      <div className="flex items-center">
+        <MobileSidebar />
+        <Logo />
+      </div>
       <div className="hidden items-center lg:flex">
         <NavbarItem />
       </div>

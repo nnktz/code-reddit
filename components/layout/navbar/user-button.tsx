@@ -37,7 +37,7 @@ import { BadgeCount } from './badge-count'
 import { notifications } from './notifications'
 import { messages } from './messages'
 
-const user = {
+export const user = {
   id: '1',
   fullName: 'Nhat Nguyen',
   username: 'nhatnguyen',
@@ -51,7 +51,7 @@ export const UserButton = () => {
   const unreadMessagesCount = messages.filter((message) => !message.isRead).length
 
   return (
-    <Menubar className="ml-2 border-none py-[14px] shadow-none">
+    <Menubar className="border-none py-[14px] shadow-none">
       <MenubarMenu>
         <MenubarTrigger asChild className="cursor-pointer">
           <Button variant={'ghost'} className="hidden h-12 rounded-md md:flex">
