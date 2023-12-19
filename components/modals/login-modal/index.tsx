@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { z } from 'zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { formLoginSchema } from '@/schema/form-schema'
 import { useLoginModal } from '@/hooks/use-login-modal'
@@ -11,24 +12,23 @@ import { useLoginModal } from '@/hooks/use-login-modal'
 import { AuthModal } from '../auth-modal'
 import { BodyContentLogin } from './body-content-login'
 import { FooterContentLogin } from './footer-content-login'
+import { HeaderContentLogin } from './header-content-login'
 
 export const LoginModal = () => {
   const router = useRouter()
   const { isOpen, onClose } = useLoginModal((state) => state)
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { isSubmitting },
-  } = useForm<z.infer<typeof formLoginSchema>>({
+  const form = useForm<z.infer<typeof formLoginSchema>>({
+    resolver: zodResolver(formLoginSchema),
     defaultValues: {
       username: '',
       password: '',
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof formLoginSchema>) => {}
+  const onSubmit = async (values: z.infer<typeof formLoginSchema>) => {
+    console.log(values)
+  }
 
   const description = (
     <>
@@ -46,15 +46,16 @@ export const LoginModal = () => {
 
   return (
     <AuthModal
-      disabled={isSubmitting}
+      disabled={form.formState.isSubmitting}
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={form.handleSubmit(onSubmit)}
       title="login"
       actionLabel="login"
       description={description}
-      body={<BodyContentLogin register={register} isLoading={isSubmitting} />}
-      footer={<FooterContentLogin />}
+      header={<HeaderContentLogin />}
+      body={<BodyContentLogin register={form.register} isLoading={form.formState.isSubmitting} />}
+      footer={<FooterContentLogin reset={form.reset} />}
     />
   )
 }

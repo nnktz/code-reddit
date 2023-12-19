@@ -1,14 +1,14 @@
 import { z } from 'zod'
 import { UseFormRegister } from 'react-hook-form'
 
-import { formLoginSchema } from '@/schema/form-schema'
+import { formRegisterSchema } from '@/schema/form-schema'
 
-interface BodyContentLoginProps {
+interface InfoFormProps {
   isLoading: boolean
-  register: UseFormRegister<z.infer<typeof formLoginSchema>>
+  register: UseFormRegister<z.infer<typeof formRegisterSchema>>
 }
 
-export const BodyContentLogin = ({ isLoading, register }: BodyContentLoginProps) => {
+export const InfoForm = ({ isLoading, register }: InfoFormProps) => {
   return (
     <div className="flex flex-col gap-y-3">
       <div className="relative">

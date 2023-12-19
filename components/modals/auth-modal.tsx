@@ -2,22 +2,21 @@
 
 import { ElementRef, useCallback, useEffect, useRef, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
-import { FcGoogle } from 'react-icons/fc'
-import { RiGithubFill } from 'react-icons/ri'
 import { HiArrowLeft } from 'react-icons/hi'
 
 import { cn } from '@/lib/utils'
 
 import { Button } from '../ui/button'
-import { ButtonLoginApi } from '../button-login-api'
 
 interface AuthModalProps {
   isOpen?: boolean
   isBack?: boolean
+  onBack?: () => void
   onClose: () => void
   onSubmit: () => void
   title?: string
   description?: string | React.ReactElement
+  header?: React.ReactElement
   body?: React.ReactElement
   footer?: React.ReactElement
   actionLabel: string
@@ -27,10 +26,12 @@ interface AuthModalProps {
 export const AuthModal = ({
   isOpen,
   isBack,
+  onBack,
   onClose,
   onSubmit,
   title,
   description,
+  header,
   body,
   footer,
   actionLabel,
@@ -54,13 +55,15 @@ export const AuthModal = ({
     }, 300)
   }, [disabled, onClose])
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
     if (disabled) {
       return
     }
 
     onSubmit()
-  }, [disabled, onSubmit])
+  }
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (event.target === closeRef.current) {
@@ -93,13 +96,15 @@ export const AuthModal = ({
                 isBack && 'justify-between',
               )}
             >
-              <button
-                type="button"
-                onClick={handleClose}
-                className="rounded-full border-0 p-2 transition hover:bg-slate-600/10 hover:opacity-75"
-              >
-                <HiArrowLeft size={18} />
-              </button>
+              {isBack && (
+                <button
+                  type="button"
+                  onClick={onBack}
+                  className="rounded-full border-0 p-2 transition hover:bg-slate-600/10 hover:opacity-75"
+                >
+                  <HiArrowLeft size={18} />
+                </button>
+              )}
 
               <button
                 type="button"
@@ -115,35 +120,28 @@ export const AuthModal = ({
 
               <span className="break-words text-sm">{description}</span>
 
-              <div className="my-2 flex flex-col items-center gap-y-2">
-                <ButtonLoginApi icon={FcGoogle} label="continue_with_google" />
-                <ButtonLoginApi icon={RiGithubFill} label="continue_with_github" />
-              </div>
-
-              <div className="flex items-center text-muted-foreground">
-                <div className="flex-grow border-t border-muted-foreground" />
-                <span className="mx-2 text-xs uppercase">or</span>
-                <div className="flex-grow border-t border-muted-foreground" />
-              </div>
+              {header}
             </div>
 
-            {/* Body */}
-            <div className="relative flex-auto p-6 px-14">{body}</div>
+            <form action="" onSubmit={handleSubmit}>
+              {/* Body */}
+              <div className="relative flex-auto p-6 px-14">{body}</div>
 
-            {/* Footer */}
-            <div className="flex flex-col gap-2 px-14">
-              {footer}
+              {/* Footer */}
+              <div className="flex flex-col gap-2 px-14">
+                {footer}
 
-              <div className="flex w-full items-center justify-center pt-6">
-                <Button
-                  onClick={handleSubmit}
-                  disabled={disabled}
-                  className="h-12 w-full rounded-3xl text-white"
-                >
-                  {actionLabel}
-                </Button>
+                <div className="flex w-full items-center justify-center pt-6">
+                  <Button
+                    type="submit"
+                    disabled={disabled}
+                    className="h-12 w-full rounded-3xl text-white"
+                  >
+                    {actionLabel}
+                  </Button>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

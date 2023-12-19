@@ -5,4 +5,10 @@ const formLoginSchema = z.object({
   password: z.string(),
 })
 
-export { formLoginSchema }
+const formRegisterSchema = z.object({
+  email: z.string().email(),
+  username: z.string(),
+  password: z.string(),
+})
+
+export { formLoginSchema, formRegisterSchema }
