@@ -15,7 +15,9 @@ export const Navbar = () => {
     <nav className="fixed top-0 z-[49] flex h-20 w-full items-center justify-between border-b px-[10px] shadow-sm md:px-[30px]">
       <div className="flex items-center">
         <MobileSidebar />
-        <Logo />
+        <div className="lg:ml-[66px]">
+          <Logo />
+        </div>
       </div>
       <div className="hidden items-center lg:flex">
         <NavbarItem />

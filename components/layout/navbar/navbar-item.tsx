@@ -322,7 +322,7 @@ export const NavbarItem = () => {
   const router = useRouter()
 
   return (
-    <Menubar className="gap-[10px] border-none py-[14px] shadow-none">
+    <Menubar className="border-none py-[14px] shadow-none">
       {routes.map((route) => (
         <MenubarMenu key={`navbar-${route.label}`}>
           {route.href ? (

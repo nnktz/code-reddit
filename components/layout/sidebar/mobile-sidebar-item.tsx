@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { LucideIcon } from 'lucide-react'
 import { IconType } from 'react-icons'
 import { usePathname } from 'next/navigation'
@@ -22,10 +21,10 @@ export const MobileSidebarItem = ({ route, title }: MobileSidebarItemProps) => {
 
   return (
     <div className="flex flex-col px-4">
-      <SheetHeader className="p-3">
-        <SheetTitle className="text-left text-base uppercase tracking-wide text-muted-foreground">
+      <div className="p-3">
+        <span className="text-left text-base uppercase tracking-wide text-muted-foreground">
           {title}
-        </SheetTitle>
+        </span>
 
         <div className="flex flex-col py-3">
           {route.map((item) => (
@@ -44,7 +43,7 @@ export const MobileSidebarItem = ({ route, title }: MobileSidebarItemProps) => {
             </Link>
           ))}
         </div>
-      </SheetHeader>
+      </div>
     </div>
   )
 }

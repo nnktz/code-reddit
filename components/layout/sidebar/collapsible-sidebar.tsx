@@ -3,8 +3,7 @@ import {
   FolderClosed,
   GraduationCap,
   Inbox,
-  LucideIcon,
-  Menu,
+  LayoutGrid,
   Settings,
   User,
   Users,
@@ -12,23 +11,26 @@ import {
 import { HiOutlineUserGroup } from 'react-icons/hi'
 import { PiChats } from 'react-icons/pi'
 import { FaRegImages } from 'react-icons/fa'
-import { IconType } from 'react-icons'
+import { Dispatch, SetStateAction } from 'react'
 
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { MobileSidebarItems } from './mobile-sidebar-items'
-import { user } from '../navbar/user-button'
+import { RoutesSidebar } from './mobile-sidebar'
+import { MobileSidebarItem } from './mobile-sidebar-item'
+import { cn } from '@/lib/utils'
 
-export type RoutesSidebar = {
-  title: string
-  route: {
-    label: string
-    icon: LucideIcon | IconType
-    href: string
-  }[]
-}[]
+interface CollapsibleSidebarProps {
+  user: {
+    id: string
+    fullName: string
+    username: string
+    imageUrl: string
+  }
+  isOpen: boolean
+  setIsOpen: Dispatch<SetStateAction<boolean>>
+}
 
-export const MobileSidebar = () => {
+export const CollapsibleSidebar = ({ user, isOpen, setIsOpen }: CollapsibleSidebarProps) => {
   const routes: RoutesSidebar = [
     {
       title: 'personal',
@@ -98,21 +100,22 @@ export const MobileSidebar = () => {
   ]
 
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-10 w-10 lg:hidden">
-          <Menu />
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className={cn(!isOpen && 'mt-auto')}>
+      <CollapsibleTrigger asChild>
+        <Button variant={'ghost'}>
+          <LayoutGrid />
         </Button>
-      </SheetTrigger>
+      </CollapsibleTrigger>
 
-      <SheetContent side={'left'} className="p-0">
-        <MobileSidebarItems
-          username={user.username}
-          fullName={user.fullName}
-          imageUrl={user.imageUrl}
-          routes={routes}
-        />
-      </SheetContent>
-    </Sheet>
+      <CollapsibleContent>
+        {routes.map((route) => (
+          <MobileSidebarItem
+            key={`collapsible-sidebar-${route.title}`}
+            title={route.title}
+            route={route.route}
+          />
+        ))}
+      </CollapsibleContent>
+    </Collapsible>
   )
 }

@@ -14,7 +14,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { HiOutlineUserGroup } from 'react-icons/hi'
 import { GiBookAura } from 'react-icons/gi'
-import { PiChatsLight } from 'react-icons/pi'
+import { PiChats } from 'react-icons/pi'
 import { FaRegImages } from 'react-icons/fa'
 
 import { cn } from '@/lib/utils'
@@ -464,7 +464,7 @@ export const UserButton = () => {
                 hasIcon={false}
               >
                 <div className="flex h-[38px] items-center">
-                  <PiChatsLight className="mr-2 h-[18px] w-[18px] text-muted-foreground" />
+                  <PiChats className="mr-2 h-[18px] w-[18px] text-muted-foreground" />
                   <span>forums</span>
                 </div>
               </MenubarSubTrigger>
