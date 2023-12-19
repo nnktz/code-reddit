@@ -3,11 +3,11 @@
 import { useEffect, useState, useTransition } from 'react'
 import { ShoppingCart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 import { PopoverWrapper } from './popover-wrapper'
 import { CartItem } from './cart-item'
 import { Button } from '@/components/ui/button'
-import { toast } from 'react-toastify'
 
 interface CartItem {
   id: string
@@ -69,10 +69,14 @@ const cartData = [
   },
 ]
 
-export const Cart = () => {
+interface CartProps {
+  userId: string | null
+}
+
+export const Cart = ({ userId }: CartProps) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const [cart, setCart] = useState(cartData || [])
+  const [cart, setCart] = useState(userId ? cartData : [])
 
   const calculateSubtotal = (cartItems: CartItem[]) => {
     const total = cartItems.reduce((acc, item) => {
@@ -132,6 +136,7 @@ export const Cart = () => {
         actionLabel={cart && cart.length > 0 ? 'view_cart' : undefined}
         handleAction={cart && cart.length > 0 ? () => router.push('/cart') : undefined}
         emptyLabel="no_products_in_cart"
+        userId={userId}
       />
     </div>
   )

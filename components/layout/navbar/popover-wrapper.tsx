@@ -16,17 +16,19 @@ interface PopoverWrapperProps {
   handleAction?: () => void
   icon: LucideIcon
   emptyLabel: string
+  userId: string | null
 }
 
 export const PopoverWrapper = ({
   title,
-  count = 0,
+  count,
   body,
   footer,
   actionLabel,
   handleAction,
   icon: Icon,
   emptyLabel,
+  userId,
 }: PopoverWrapperProps) => {
   return (
     <Popover>
@@ -41,7 +43,7 @@ export const PopoverWrapper = ({
             )}
           >
             <Icon />
-            <BadgeCount count={count} />
+            {userId && <BadgeCount count={count} />}
           </div>
         </Hint>
       </PopoverTrigger>
